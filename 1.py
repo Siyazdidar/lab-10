@@ -60,9 +60,15 @@ while check:
 
     if command == "d" or command == "D":
         command = ''
-        idd = str(input('id which you want to delete: '))
-        cur.execute("DELETE FROM phonebook WHERE user_id = %s", (idd,))
-        conn.commit()
+        idd = str(input('"name" or "phone": '))
+        if idd == "name":
+            name = str(input("name that you want to delete: "))
+            cur.execute("DELETE FROM phonebook WHERE name = %s", (name,))
+            conn.commit()
+        if idd == "phone":
+            phone = str(input("phone that you want to delete: "))
+            cur.execute("DELETE FROM phonebook WHERE phone = %s", (phone,))
+            conn.commit()
     
 
     if command == 'u' or command == 'U':
