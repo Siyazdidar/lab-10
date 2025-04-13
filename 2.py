@@ -117,6 +117,7 @@ def update_food():
             food_list.append(spawn_food())
 
 isRunning = True
+paused = False
 
 INC_SPEED = pygame.USEREVENT + 1
 pygame.time.set_timer(INC_SPEED, 1000)
@@ -134,6 +135,8 @@ while isRunning:
             isRunning = False
             sys.exit()  # Fixed sys.quit() to sys.exit()
         elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                paused = not paused
             if event.key == pygame.K_UP and snake_direction != "DOWN":
                 change_to = "UP"
             if event.key == pygame.K_DOWN and snake_direction != "UP":
@@ -142,8 +145,13 @@ while isRunning:
                 change_to = "LEFT"
             if event.key == pygame.K_RIGHT and snake_direction != "LEFT":
                 change_to = "RIGHT"    
- 
- 
+            
+    if paused:
+        pause_text = font.render("PAUSED", True, WHITE)
+        screen.blit(pause_text, (WIDTH // 2 -10, HEIGHT // 2))
+        pygame.display.update()
+        clock.tick(5)
+        continue
  
     # Move snake based on direction
     snake_direction = change_to
